@@ -1,0 +1,438 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fce4ec 0%, #e1bee7 50%, #bbdefb 100%);
+    color: #333;
+}
+
+/* Music Toggle Button */
+.music-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 3px solid #f9a8d4;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.music-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.music-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Curtain Effect - Realistic fabric look */
+.curtain-left,
+.curtain-right {
+    position: fixed;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 9999;
+    transition: transform 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.1);
+}
+
+.curtain-left {
+    left: 0;
+    transform: translateX(0);
+    background: linear-gradient(90deg, 
+        #ffc1e3 0%, 
+        #ffb3db 10%, 
+        #ffc1e3 20%, 
+        #ffb3db 30%, 
+        #ffc1e3 40%, 
+        #ffb3db 50%, 
+        #ffc1e3 60%, 
+        #ffb3db 70%, 
+        #ffc1e3 80%, 
+        #ffb3db 90%, 
+        #ffc1e3 100%);
+    box-shadow: 
+        inset -20px 0 40px rgba(255, 255, 255, 0.3),
+        inset 20px 0 40px rgba(0, 0, 0, 0.1),
+        5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.curtain-right {
+    right: 0;
+    transform: translateX(0);
+    background: linear-gradient(90deg, 
+        #ffc1e3 0%, 
+        #ffb3db 10%, 
+        #ffc1e3 20%, 
+        #ffb3db 30%, 
+        #ffc1e3 40%, 
+        #ffb3db 50%, 
+        #ffc1e3 60%, 
+        #ffb3db 70%, 
+        #ffc1e3 80%, 
+        #ffb3db 90%, 
+        #ffc1e3 100%);
+    box-shadow: 
+        inset 20px 0 40px rgba(255, 255, 255, 0.3),
+        inset -20px 0 40px rgba(0, 0, 0, 0.1),
+        -5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.curtain-left.open {
+    transform: translateX(-100%);
+}
+
+.curtain-right.open {
+    transform: translateX(100%);
+}
+
+/* Curtain pleats overlay effect */
+.curtain-left::before,
+.curtain-right::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.1) 0px,
+        rgba(255, 255, 255, 0.05) 15px,
+        rgba(0, 0, 0, 0.05) 30px,
+        rgba(255, 255, 255, 0.05) 45px,
+        rgba(255, 255, 255, 0.1) 60px
+    );
+    pointer-events: none;
+}
+
+/* Top curtain rod effect */
+.curtain-left::after,
+.curtain-right::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(to bottom, 
+        rgba(139, 69, 19, 0.3) 0%, 
+        rgba(160, 82, 45, 0.2) 50%, 
+        transparent 100%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.main-content {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+.content-wrapper {
+    text-align: center;
+    max-width: 900px;
+    width: 100%;
+}
+
+/* Balloons - Start from bottom and rise up */
+.balloons-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeIn 1s ease-in 2.5s forwards;
+}
+
+.balloon {
+    position: relative;
+    animation: riseUp 3s ease-out 2.5s forwards, float 6s ease-in-out 5.5s infinite;
+    transform: translateY(100vh);
+}
+
+.balloon-delay-1 {
+    animation: riseUp 3s ease-out 2.7s forwards, float 6s ease-in-out 5.7s infinite;
+}
+
+.balloon-delay-2 {
+    animation: riseUp 3s ease-out 2.9s forwards, float 6s ease-in-out 5.9s infinite;
+}
+
+.balloon-body {
+    width: 80px;
+    height: 96px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.balloon-body::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    width: 16px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+}
+
+.balloon-string {
+    position: absolute;
+    bottom: -48px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 48px;
+    background: #888;
+}
+
+.balloon-red .balloon-body {
+    background: linear-gradient(to bottom, #ff6b6b, #c92a2a);
+}
+
+.balloon-pink .balloon-body {
+    background: linear-gradient(to bottom, #ff8ed4, #d946a6);
+}
+
+.balloon-purple .balloon-body {
+    background: linear-gradient(to bottom, #b794f6, #7c3aed);
+}
+
+.balloon-blue .balloon-body {
+    background: linear-gradient(to bottom, #74b9ff, #0984e3);
+}
+
+.balloon-yellow .balloon-body {
+    background: linear-gradient(to bottom, #ffd93d, #f5a623);
+}
+
+/* Main Message */
+.message-container {
+    opacity: 0;
+    transform: translateY(50px);
+    animation: slideUp 1.5s ease-out 5.5s forwards;
+}
+
+.title {
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.name {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #7c3aed;
+    margin-bottom: 30px;
+}
+
+.year {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+/* Heartfelt Message Card */
+.card-message {
+    opacity: 0;
+    animation: fadeIn 2s ease-in 7.5s forwards;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 50px;
+    margin-top: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    border: 4px solid #f9a8d4;
+}
+
+.message-text {
+    font-size: 1.5rem;
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.message-signature {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #7c3aed;
+    margin-top: 30px;
+}
+
+.message-emojis {
+    font-size: 4rem;
+    margin-top: 30px;
+}
+
+/* Background Hearts */
+.hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.heart {
+    position: absolute;
+    font-size: 20px;
+    color: rgba(236, 72, 153, 0.3);
+    animation: float 8s ease-in-out infinite;
+}
+
+/* Confetti */
+.confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 5;
+}
+
+.confetti {
+    position: absolute;
+    font-size: 2.5rem;
+    animation: float 7s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes riseUp {
+    from {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .title {
+        font-size: 3rem;
+    }
+    
+    .name {
+        font-size: 2.5rem;
+    }
+    
+    .year {
+        font-size: 2rem;
+    }
+    
+    .card-message {
+        padding: 30px;
+    }
+    
+    .message-text {
+        font-size: 1.2rem;
+    }
+    
+    .message-signature {
+        font-size: 1.4rem;
+    }
+    
+    .message-emojis {
+        font-size: 3rem;
+    }
+    
+    .balloon-body {
+        width: 60px;
+        height: 72px;
+    }
+    
+    .balloons-container {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 2rem;
+    }
+    
+    .name {
+        font-size: 1.8rem;
+    }
+    
+    .year {
+        font-size: 1.5rem;
+    }
+    
+    .message-text {
+        font-size: 1rem;
+    }
+    
+    .message-signature {
+        font-size: 1.2rem;
+    }
+    
+    .card-message {
+        padding: 20px;
+    }
+}
